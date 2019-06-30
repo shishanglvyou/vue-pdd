@@ -1,0 +1,22 @@
+<template>
+  <div class="box">
+    我是鞋包板块
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "Box"
+  }
+</script>
+
+<style scoped>
+  .box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+</style>

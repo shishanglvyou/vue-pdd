@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "ly-tab": "^2.1.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "swiper": "^4.5.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"

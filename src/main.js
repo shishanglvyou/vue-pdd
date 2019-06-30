@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 import './common/css/reset.css'
 import './common/js/fastclick'
+import LyTab from 'ly-tab'
+
+Vue.use(LyTab)
 Vue.config.productionTip = false
 
 new Vue({

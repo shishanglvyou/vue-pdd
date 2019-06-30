@@ -5,7 +5,49 @@ export default [
   },
   {
     path:'/home',
-    component:()=>import('@/views/Home')
+    component:()=>import('@/views/Home'),
+    children:[
+      {
+        path:'hot',
+        component:()=>import('@/views/Home/Children/Hot/Hot.vue')
+      },
+      {
+        path:'box',
+        component:()=>import('@/views/Home/Children/Box.vue')
+      },
+      {
+        path:'dress',
+        component:()=>import('@/views/Home/Children/Dress.vue')
+      },
+      {
+        path:'food',
+        component:()=>import('@/views/Home/Children/Food.vue')
+      },
+      {
+        path:'general',
+        component:()=>import('@/views/Home/Children/General.vue')
+      },
+      {
+        path:'man',
+        component:()=>import('@/views/Home/Children/Man.vue')
+      },
+      {
+        path:'mbaby',
+        component:()=>import('@/views/Home/Children/MBaby.vue')
+      },
+      {
+        path:'ele',
+        component:()=>import('@/views/Home/Children/Ele.vue')
+      },
+      {
+        path:'shirt',
+        component:()=>import('@/views/Home/Children/Shirt.vue')
+      },
+      {
+        path:'home',
+        redirect:'/home/hot'
+      }
+    ]
   },
   {
     path:'/chat',
