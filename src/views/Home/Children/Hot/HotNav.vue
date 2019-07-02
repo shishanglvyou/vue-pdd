@@ -121,7 +121,7 @@
       },
       // 开始触摸
       handleTouchStart(event){
-        console.log(event.touches);
+        //console.log(event.touches);
         // 1. 获取第一个触点
         let touch = event.touches[0];
         // 2.求出起始点

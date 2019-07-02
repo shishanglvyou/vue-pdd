@@ -1,9 +1,5 @@
 export default [
   {
-    path:'/',
-    redirect:'/home'
-  },
-  {
     path:'/home',
     component:()=>import('@/views/Home'),
     children:[
@@ -44,7 +40,7 @@ export default [
         component:()=>import('@/views/Home/Children/Shirt.vue')
       },
       {
-        path:'home',
+        path:'/home',
         redirect:'/home/hot'
       }
     ]
@@ -65,4 +61,8 @@ export default [
     path:'/mine',
     component:()=>import('@/views/Mine')
   },
+  {
+    path:'/',
+    redirect:'/home'
+  }
 ]

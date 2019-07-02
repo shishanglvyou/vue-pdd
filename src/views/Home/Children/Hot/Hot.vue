@@ -18,6 +18,7 @@
     <div class="hot-ad">
       <img src="../../imgs/hot_ad/home_ad.gif" alt="" width="100%">
     </div>
+    <hot-shop-list/>
   </div>
 </template>
 
@@ -25,10 +26,12 @@
   import Swiper from 'swiper'
   import 'swiper/dist/css/swiper.min.css'
   import HotNav from './HotNav'
+  import HotShopList from './HotShopList'
   export default {
     name: "Hot",
     components:{
-      HotNav
+      HotNav,
+      HotShopList
     },
     mounted() {
       // 2. 创建swiper实例
