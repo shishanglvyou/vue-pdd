@@ -1,7 +1,7 @@
 <template>
   <div class="hot">
     <!--轮播图-->
-    <div class="swiper-container" v-if="homecasual.length>0">
+    <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(casual,index) in homecasual" :key="index"><img :src="casual.imgurl" alt="" width="100%"></div>
       </div>
@@ -35,6 +35,8 @@
     },
     mounted() {
       this.$store.dispatch('reqHomeCasual');
+      this.$store.dispatch('reqHomeNav');
+      this.$store.dispatch('reqHomeShopList');
     },
     watch:{
       homecasual(){
