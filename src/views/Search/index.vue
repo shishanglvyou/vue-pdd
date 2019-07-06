@@ -4,27 +4,34 @@
     <div class="shop">
       <div class="menu-wrapper">
         <ul>
-          <li class="menu-item" v-for="(goods,index) in searchgoods" :key="index">
+          <li class="menu-item"
+              v-for="(goods, index) in searchgoods"
+              :key="index"
+              :class="{current: index === currentIndex}"
+              @click="clickLeftItem(index)"
+              ref = 'menulist'>
             <span>{{goods.name}}</span>
           </li>
         </ul>
       </div>
       <div class="shop-wrapper">
-        <ul ref="shopParent">
+        <ul ref="shopsParent">
           <li class="shops-li" v-for="(goods,index1) in searchgoods" :key="index1">
             <div class="shops-title">
               <h4>{{goods.name}}</h4>
               <a href="">查看更多 </a>
             </div>
-            <div class="phone-type" v-if="goods.tag==='phone'">
-              <div class="phone-img" v-for="(phone,index) in goods.category" :key="index">
-                <img :src="phone.icon" alt="" width="80%">
-              </div>
-            </div>
-            <div class="shops-items" v-for="(item,index2) in goods.items" :key="index2">
-              <img :src="item.icon" alt="">
-              <span>{{item.title}}</span>
-            </div>
+            <!--<ul class="phone-type" v-if="goods.tag==='phone'">-->
+              <!--<li class="phone-img" v-for="(phone,index) in goods.category" :key="index">-->
+                <!--<img :src="phone.icon" alt="" width="70%">-->
+              <!--</li>-->
+            <!--</ul>-->
+            <ul class="shops-items">
+              <li v-for="(item,index2) in goods.items" :key="index2">
+                <img :src="item.icon" alt="">
+                <span>{{item.title}}</span>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -41,49 +48,78 @@
     data(){
       return{
         scrollY:0,
-        rightDivTops:[],
+        rightLiTops:[],
       }
+    },
+    mounted() {
+      this.$store.dispatch('reqSearchGoods')
     },
     components: {
       searchNav
     },
     computed:{
-      ...mapState(['searchgoods'])
-    },
-    mounted() {
-      this.$store.dispatch('reqSearchGoods')
+      ...mapState(['searchgoods']),
+      //  1. 用于动态决定左侧哪个选项被选中
+      currentIndex() {
+        // 1.1 获取数据
+        const {scrollY, rightLiTops} = this;
+        // 1.2  取出索引
+        return rightLiTops.findIndex((liTop, index) => {
+          this._leftScroll(index);
+          return scrollY >= liTop && scrollY < rightLiTops[index + 1];
+        })
+      }
     },
     watch:{
       searchgoods(){
         this.$nextTick(()=>{
           this._initBScroll();
-          this._initRightDivTops();
+          this._initRightLiTops();
         })
       }
     },
     methods:{
       _initBScroll(){
-        let leftScroll = new BScroll('.menu-wrapper',{
+        this.leftScroll = new BScroll('.menu-wrapper',{
           scrollY: true,
           click: true
         });
-        let rightScroll = new BScroll('.shop-wrapper',{
+        this.rightScroll = new BScroll('.shop-wrapper',{
           scrollY: true,
-          click: true
+          click: true,
+          probeType:3
         });
-
+        this.rightScroll.on('scroll', (pos) => {
+          this.scrollY = Math.abs(pos.y);
+          //console.log(this.scrollY);
+        })
       },
-      _initRightDivTops(){
+      _initRightLiTops(){
         const tempArr=[];
         let top=0;
         tempArr.push(top);
-        let allLis=this.$refs.shopParent.getElementsByClassName('shops-li');
+        let allLis=this.$refs.shopsParent.getElementsByClassName('shops-li');
         Array.prototype.slice.call(allLis).forEach(li=>{
           top+=li.clientHeight;
           tempArr.push(top)
         });
-        this.rightDivTops=tempArr;
-      }
+        this.rightLiTops=tempArr;
+        console.log(tempArr);
+      },
+      // 1.3  点击切换
+      clickLeftItem(index) {
+        this.scrollY = this.rightLiTops[index];
+        this.rightScroll.scrollTo(0, -this.scrollY, 300);
+      },
+
+      // 1.4 左侧联动
+      _leftScroll(index){
+        let menuLists = this.$refs.menulist;
+        // console.log(menuLists);
+        let el = menuLists[index];
+        // console.log(el);
+        this.leftScroll.scrollToElement(el, 300, 0, -100)
+      },
     }
   }
 </script>
@@ -155,7 +191,10 @@
     font-weight: lighter;
   }
   .shops-items{
-    float: left;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .shops-items li{
     display: flex;
     flex-direction: column;
     width: 33.3%;
