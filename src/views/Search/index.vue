@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <search-nav/>
+    <search-nav :isShowSearchPanel="isShowSearchPanel"/>
     <div class="shop">
       <div class="menu-wrapper">
         <ul>
@@ -36,11 +36,13 @@
         </ul>
       </div>
     </div>
+    <search-panel v-if="isShow" :isShowSearchPanel="isShowSearchPanel"/>
   </div>
 </template>
 
 <script>
   import searchNav from './children/SearchNav'
+  import searchPanel from './children/searchPanel'
   import {mapState} from 'vuex'
   import BScroll from 'better-scroll'
   export default {
@@ -49,13 +51,15 @@
       return{
         scrollY:0,
         rightLiTops:[],
+        isShow:false,
       }
     },
     mounted() {
       this.$store.dispatch('reqSearchGoods')
     },
     components: {
-      searchNav
+      searchNav,
+      searchPanel
     },
     computed:{
       ...mapState(['searchgoods']),
@@ -120,6 +124,9 @@
         // console.log(el);
         this.leftScroll.scrollToElement(el, 300, 0, -100)
       },
+      isShowSearchPanel(flag){
+        this.isShow=flag
+      }
     }
   }
 </script>
