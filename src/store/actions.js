@@ -25,9 +25,10 @@ export default {
     const result=await getHomeShopList();
     commit(HOME_SHOP_LIST,{homeshoplist:result.message.goods_list})
   },
-  async reqRecommendShopList({commit}){
-    const result=await getRecommendShopList();
-    commit(RECOMMEND_SHOP_LIST,{recommendshoplist:result.message.data})
+  async reqRecommendShopList({commit}, params){
+    const result=await getRecommendShopList(params);
+    commit(RECOMMEND_SHOP_LIST,{recommendshoplist:result.message})
+    params.callback && params.callback();
   },
   async reqSearchGoods({commit}){
     const result=await getSearchGoods();

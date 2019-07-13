@@ -16,7 +16,7 @@ export default {
     state.homeshoplist=homeshoplist
   },
   [RECOMMEND_SHOP_LIST](state,{recommendshoplist}){
-    state.recommendshoplist=recommendshoplist
+    state.recommendshoplist=state.recommendshoplist.concat(recommendshoplist);
   },
   [SEARCH_GOODS](state,{searchgoods}){
     state.searchgoods=searchgoods
