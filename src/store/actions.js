@@ -15,7 +15,7 @@ import {
 export default {
   async reqHomeCasual({commit}){
     const result=await getHomeCasual();
-    commit(HOME_CASUAL,{homecasual:result.message.data})
+    commit(HOME_CASUAL,{homecasual:result.message})
   },
   async reqHomeNav({commit}){
     const result=await getHomeNav();
